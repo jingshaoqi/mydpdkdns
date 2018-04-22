@@ -1,7 +1,8 @@
 #!/bin/bash
 
 dev=$1
-
+dev=ens38
+# export RTE_SDK=/root/dpdk;export RTE_TARGET=x86_64-native-linuxapp-gcc
 bind_nic() {
     ifconfig $dev down
     ${RTE_SDK}/usertools/dpdk-devbind.py --bind=igb_uio $dev
@@ -15,6 +16,11 @@ record_eth() {
     netmask=`echo $inetinfo | awk '/inet/{print $4}'`
     mac=`echo $macinfo | awk '/ether/{print $2}'`
     gateway=`route -n | awk '/UG/{print $2}'`
+
+	ipaddr="192.168.1.109"
+	netmask="255.255.255.0"
+	mac="00:0c:29:e3:ec:d5"
+	gateway="192.168.1.1"
 
     basepath=$(cd `dirname $0`; pwd)
     nicinfo="$basepath/nicinfo.log"
