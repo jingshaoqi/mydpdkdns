@@ -12,6 +12,10 @@ IF(NOT RTE_SDK)
 	message(FATAL_ERROR "please set RTE_SDK path!")
 ENDIF(NOT RTE_SDK)
 
+IF(NOT RTE_TARGET)
+        message(FATAL_ERROR "please set RTE_TARGET parameter!")
+ENDIF(NOT RTE_TARGET)
+
 #头文件目录
 include_directories(${PROJECT_SOURCE_DIR}/include /usr/include)
 include_directories("${RTE_SDK}/${RTE_TARGET}/include")
@@ -20,10 +24,10 @@ message(STATUS "RTE_SDK include path：${RTE_SDK}/include")
 #lib连接文件目录
 link_directories(${PROJECT_SOURCE_DIR}/lib /usr/local/lib)
 link_directories("${RTE_SDK}/${RTE_TARGET}/lib")
-message(STATUS "RTE_SDK include path：${RTE_SDK}/lib")
+message(STATUS "RTE_SDK include path：${RTE_SDK}/${RTE_TARGET}/lib")
 
 #指定编译器 参数
-SET(CMAKE_CXX_FLAGS "-g -Wall -Wextra -ffunction-sections -O3 -include $(RTE_SDK)/${RTE_TARGET}/include/rte_config.h -msse4.2")
+SET(CMAKE_CXX_FLAGS "-g3 -Wall -Wextra -ffunction-sections -include $(RTE_SDK)/${RTE_TARGET}/include/rte_config.h -msse4.2")
 
 add_definitions(--std=c++11)
 
